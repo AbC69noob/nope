@@ -1,41 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Happy Valentine's Day!</h1>
-    <p>Will you be my Valentine?</p>
-    <div class="actions">
-        <button id="yesBtn" onclick="option1()">Yes</button>
-        <button id="noBtn" class="no-btn" onclick="option2()">No</button>
+    <div class="boundary-container">
+        <h1>Happy Valentine's Day!</h1>
+        <p>Will you be my Valentine?</p>
+        <div class="actions">
+            <button id="yesBtn" onclick="option1()">Yes</button>
+            <button id="noBtn" class="no-btn" onclick="option2()">No</button>
+        </div>
+        <p id="loveMsg" class="message" aria-live="polite"></p>
     </div>
-    <p id="loveMsg" class="message" aria-live="polite"></p>
 
     <script>
         const noBtn = document.getElementById("noBtn");
         const yesBtn = document.getElementById("yesBtn");
         const loveMsg = document.getElementById("loveMsg");
         const actions = document.querySelector(".actions");
+        const boundary = document.querySelector(".boundary-container");
         const isWindows = navigator.userAgent.includes("Windows");
 
         function option2() {
-            const rect = noBtn.getBoundingClientRect();
-            const padding = 16;
-            const viewport = window.visualViewport;
-            const vw = viewport?.width ?? window.innerWidth;
-            const vh = viewport?.height ?? window.innerHeight;
-            const offsetX = viewport?.offsetLeft ?? 0;
-            const offsetY = viewport?.offsetTop ?? 0;
-            const minX = padding + offsetX;
-            const minY = padding + offsetY;
-            const maxX = Math.max(minX, offsetX + vw - rect.width - padding);
-            const maxY = Math.max(minY, offsetY + vh - rect.height - padding);
-            const nextX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
-            const nextY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+            const padding = 10;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            // Get boundary dimensions
+            const boundaryRect = boundary.getBoundingClientRect();
+            const boundaryWidth = boundaryRect.width;
+            const boundaryHeight = boundaryRect.height;
+            const boundaryLeft = boundaryRect.left;
+            const boundaryTop = boundaryRect.top;
+
+            // Calculate random position within boundary
+            const minX = boundaryLeft + padding;
+            const minY = boundaryTop + padding;
+            const maxX = boundaryLeft + boundaryWidth - btnWidth - padding;
+            const maxY = boundaryTop + boundaryHeight - btnHeight - padding;
+            const nextX = minX + Math.random() * (maxX - minX);
+            const nextY = minY + Math.random() * (maxY - minY);
 
             noBtn.style.position = "fixed";
             noBtn.style.left = `${nextX}px`;
@@ -58,4 +68,5 @@
         noBtn.addEventListener("touchstart", option2, { passive: true });
     </script>
 </body>
+
 </html>

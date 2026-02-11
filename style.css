@@ -69,6 +69,18 @@ p {
   color: #5b2a3f;
 }
 
+.boundary-container {
+  position: relative;
+  width: min(600px, 90vw);
+  height: min(800px, 85vh);
+  padding: 40px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(226, 59, 106, 0.1);
+  box-shadow: 0 8px 32px rgba(59, 26, 42, 0.1);
+}
+
 body > * {
   animation: rise 0.9s ease both;
 }
